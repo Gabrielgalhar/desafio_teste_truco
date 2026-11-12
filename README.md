@@ -7,230 +7,64 @@
 **RA:** 24021292-2  
 **Turma:** ESOFT6SB
 
-## Sobre o projeto
+não faça o desafio
+Base: desafios da disciplina . Implementação e testes em JavaScript, conforme solicitado. Este projeto é independente e deve ser publicado em um repositório chamado desafio_teste_truco .
 
-Este projeto foi desenvolvido para o desafio de testes de software envolvendo a implementação e validação da lógica do **Truco Paulista**, utilizando JavaScript.
+Motor de uma partida de truco paulista com quatro jogadores: dupla 0 formada pelos jogadores 0 e 2; dupla 1 pelos jogadores 1 e 3. Partida até 12 pontos, com mãos de até três vazas e três cartas por jogador.
 
-O sistema representa uma partida com **quatro jogadores divididos em duas duplas**:
+Regras inovadoras: baralho limpo de 40 cartas; ordem 4, 5, 6, 7, Q, J, K, A, 2, 3; manilha seguinte ao vira; força dos naipes das manilhas ouros < espadas < copas < paus; empate de vazas; desempate pela primeira vaza ou pela equipe mão; pedidos aceitos de 3, 6, 9 e 12; recusa paga o valor anterior. Uma mesma equipe não pode elevar o próprio pedido aceito. O pedido é feito na vez do jogador; para simplificar a negociação, a resposta aceita ou recusa, sem contraproposta imediata.
 
-- **Dupla 0:** jogadores 0 e 2
-- **Dupla 1:** jogadores 1 e 3
+Na mão de onze, a equipe com 11 decide se joga por três pontos ou recusa cedendo um ponto. Se ambos têm 11, joga-se a mão de ferro: cartas e vira ficam ocultos na consulta e não é pedir truco. A decisão da mão de onze é informada pelo identificador da equipe. O motor mantém o baralho internamente para resolver as cartas ocultas.
 
-A partida é disputada até que uma das duplas alcance **12 pontos**. Cada mão possui até três vazas e cada jogador recebe três cartas.
+O baralho pode ser informado ao iniciar cada mão. O padrão é uma ordem fixa, para demonstração reproduzível; não há embaralhamento automático nem apostas. O chamador informa quem é o jogador mão ao iniciar a próxima mão. Não há interface de usuário, cartas fechadas especificamente em mãos normais ou segurança de acesso entre clientes; os testes avaliam a lógica do jogo.
 
-O projeto possui foco na implementação da regra do jogo e na criação de testes automatizados. Não foi desenvolvida uma interface gráfica, pois o objetivo principal é validar o funcionamento do motor através dos testes em JavaScript.
+Executor
+Requisito: Node.js 22 ou superior, com npm. O projeto não possui dependências externas; não é necessário executar npm install.
 
-## Regras implementadas
-
-A implementação contempla as principais regras do Truco Paulista, incluindo:
-
-- Baralho com 40 cartas;
-- Exclusão das cartas 8, 9 e 10;
-- Hierarquia normal das cartas;
-- Definição das manilhas através da carta vira;
-- Ordem de força dos naipes das manilhas:
-  - Ouros;
-  - Espadas;
-  - Copas;
-  - Paus;
-- Distribuição de três cartas para cada jogador;
-- Controle da vez de cada jogador;
-- Validação das cartas utilizadas;
-- Resolução das vazas;
-- Critérios de desempate;
-- Finalização da mão após duas vazas vencidas;
-- Pedido de Truco;
-- Escalada de pontos para 3, 6, 9 e 12;
-- Recusa do pedido de Truco;
-- Regras para mão de onze;
-- Mão de ferro;
-- Controle da pontuação das duplas;
-- Encerramento da partida ao atingir 12 pontos.
-
-A lógica também impede que uma mesma dupla faça uma nova elevação do próprio pedido aceito e controla se o jogador está autorizado a realizar determinada ação em seu turno.
-
-## Mão de onze e mão de ferro
-
-Quando uma dupla alcança 11 pontos, existe uma decisão especial antes da continuação da partida.
-
-A equipe pode aceitar jogar a mão valendo três pontos ou recusar, concedendo um ponto à dupla adversária.
-
-Quando as duas equipes possuem 11 pontos, é iniciada a chamada **mão de ferro**. Nessa situação, as cartas e o vira ficam ocultos nas consultas de estado e não é permitido realizar pedido de Truco.
-
-O motor mantém internamente as informações necessárias para que as cartas ocultas continuem sendo utilizadas corretamente durante a partida.
-
-## Estrutura do projeto
-
-A organização principal do projeto é:
-
-```text
-desafio_teste_truco_gabriel/
-│
-├── src/
-│   └── truco.js
-│
-├── test/
-│   └── truco.test.js
-│
-├── evidencias/
-│   ├── testes.log
-│   └── cobertura.log
-│
-├── package.json
-└── README.md
-```
-
-O arquivo `src/truco.js` contém a implementação do motor do jogo.
-
-Os testes automatizados ficam em `test/truco.test.js`.
-
-A pasta `evidencias` é utilizada para armazenar os resultados obtidos durante a execução dos testes e da cobertura.
-
-## Como executar
-
-### Requisitos
-
-Para executar o projeto é necessário possuir:
-
-- Node.js 22 ou superior;
-- npm.
-
-O projeto não utiliza bibliotecas externas obrigatórias, portanto não é necessário instalar dependências adicionais para executar os testes.
-
-### Executar os testes
-
-Dentro da pasta do projeto, execute:
-
-```bash
 npm test
-```
-
-Esse comando executa os testes utilizando os recursos nativos de testes do Node.js.
-
-### Executar os testes com cobertura
-
-Para executar os testes juntamente com o relatório de cobertura:
-
-```bash
 npm run coverage
-```
+O primeiro comando executa todos os testes com node:teste node:assert/strict. O segundo acrescenta o relatório de cobertura nativa do Node. O processo termina com código diferente de zero se algum teste falhar.
 
-A execução permite verificar a quantidade de testes aprovados e também os percentuais de cobertura do código.
-
-## Exemplo básico
-
-A utilização do motor pode ser feita através da classe `Truco`:
-
-```javascript
+Exemplo de uso
 import { Truco } from './src/truco.js';
-
 const jogo = new Truco();
-
 jogo.iniciarMao();
-
 jogo.pedirTruco(0);
-
 jogo.responderTruco(1, true);
+console.log(jogo.estado.valor); // 3
+jogo.jogar(0, 0); // jogador 0 joga a primeira carta da própria mão
+Os exemplos são executados como módulos ES, em um arquivo .jsdentro deste projeto. A lógica fica em src/truco.js e os testes em test/truco.test.js .
 
-console.log(jogo.estado.valor);
+Casos de teste e funcionamento
+Cada teste prepara uma partida independente, executa uma ação pública do motor e compara o resultado ou o estado esperado. Operações inválidas são verificadas com assert.throws; quando relevante, o estado anterior e posterior também é comparado. Os testes não substituem a implementação por mocks.
 
-jogo.jogar(0, 0);
-```
+Caso	Comportamento verificado
+CT01	baralho limpo tem 40 cartas e exclui 8, 9 e 10
+CT02	ordem normal vai de 4 ate 3
+CT03	manilha e o valor seguinte ao vira, com volta de 3 para 4
+CT04	naipes das manilhas: ouros, espadas, copas e paus
+CT05	carta ou vaza invalida e rejeitada
+CT06	maior carta vence, empate adversário amarrado, parceiro empate vence dupla
+CT07	duas vazas vencidas encerram a mao
+CT08	regras de desempate das vazas
+CT09	distribui três cartas para quatro jogadores e um vira
+CT10	rejeição distribuição repetida e inicio durante mao aberto
+CT11	exige turno correto e carta disponível sem alteração a maio
+CT12	aceitar truco elevar o valor para três e preservar o turno
+CT13	truco de um ponto de recusa a dupla solicitante
+CT14	escalada aceita segue 3, 6, 9 e 12; recusa paga valor anterior
+CT15	mão de onze exige decisão e vale três quando aceitar
+CT16	recusa mao de onze conceder um ponto ao adversário
+CT17	partida completa termina ao atingir doze pontos
+CT18	snapshots e placar inicial não permitem alterar estado interno
+CT19	mão de ferro oculta cartas e vira e não permite truco
+CT20	mao normal pontua um e permite iniciar a proxima mao
+Evidências da execução
+Execução em 11/10/2026, Node.js 22.19.0: 20 testes aprovados, zero falhas, zero ignorados . Saída completa em evidencias/testes.log .
 
-O exemplo representa a criação de uma partida, o início de uma mão, um pedido de Truco, a aceitação do pedido e a utilização de uma carta pelo jogador.
+Cobertura do arquivo de produção: 100,00% de linhas, 94,96% de ramificações e 100,00% de funções . Os percentuais são do arquivo src/truco.js; não foi usado a mídia que inclui o código dos testes. Cobertura indica código exercido e não prova ausência de defeitos ou atendimento de variantes não especificadas.
 
-## Testes automatizados
+Organização e entrega
+src/contém o motor do jogo; test/contém os casos automatizados; evidencias/registra o resultado real. O projeto não exige navegador, banco ou interface gráfica. Há uma configuração do GitHub Actions para repetir os testes a cada solicitação push ou pull.
 
-Foram criados **22 casos de teste** para verificar diferentes partes da lógica do jogo.
-
-Cada cenário utiliza uma partida independente e verifica o resultado esperado da operação realizada. Quando uma operação deve ser recusada, o teste verifica se o sistema realmente gera a exceção esperada.
-
-Os testes também verificam situações em que o estado da partida não deve ser alterado após uma operação inválida.
-
-### Casos de teste
-
-| Caso | Validação realizada |
-|---|---|
-| CT01 | Verifica se o baralho possui 40 cartas e não contém 8, 9 e 10 |
-| CT02 | Confere a sequência normal de força das cartas |
-| CT03 | Verifica a definição da manilha a partir do vira |
-| CT04 | Valida a hierarquia dos naipes das manilhas |
-| CT05 | Rejeita carta ou vaza inválida |
-| CT06 | Verifica vencedor, empate e desempate entre jogadores |
-| CT07 | Confirma o encerramento da mão após duas vazas |
-| CT08 | Testa os critérios de desempate das vazas |
-| CT09 | Confere a distribuição de cartas e definição do vira |
-| CT10 | Impede distribuição repetida e início indevido de uma mão |
-| CT11 | Valida o turno do jogador e a disponibilidade da carta |
-| CT12 | Testa a aceitação do Truco e alteração do valor da mão |
-| CT13 | Verifica a pontuação quando um pedido de Truco é recusado |
-| CT14 | Testa a sequência de valores 3, 6, 9 e 12 |
-| CT15 | Valida o funcionamento da mão de onze |
-| CT16 | Verifica a recusa da mão de onze |
-| CT17 | Confirma o encerramento da partida aos 12 pontos |
-| CT18 | Verifica a proteção dos snapshots e do placar |
-| CT19 | Testa as regras específicas da mão de ferro |
-| CT20 | Verifica a pontuação de uma mão normal e o início da próxima |
-| CT21 | Impede que a mesma dupla aumente novamente seu próprio pedido |
-| CT22 | Garante que o pedido de Truco aconteça somente no turno correto |
-
-## Resultado dos testes
-
-Na versão atual do projeto foram executados **22 casos de teste**.
-
-Resultado esperado da execução:
-
-```text
-tests 22
-pass 22
-fail 0
-cancelled 0
-skipped 0
-todo 0
-```
-
-Isso significa que todos os cenários implementados na suíte foram aprovados durante a execução.
-
-A evidência da execução deve ser obtida diretamente através do comando:
-
-```bash
-npm test
-```
-
-e a cobertura pode ser gerada utilizando:
-
-```bash
-npm run coverage
-```
-
-## Cobertura de código
-
-Além dos testes funcionais, o projeto possui configuração para geração de cobertura utilizando os recursos do próprio Node.js.
-
-A cobertura permite identificar quais partes do código foram exercitadas durante os testes, considerando métricas como:
-
-- Linhas;
-- Ramificações;
-- Funções.
-
-A cobertura é utilizada como uma métrica complementar aos testes. Um percentual elevado de cobertura não significa que o sistema esteja livre de defeitos, mas indica que uma quantidade maior do código foi executada pelos cenários automatizados.
-
-## Evidências
-
-Após executar os comandos de teste, os resultados podem ser registrados na pasta:
-
-```text
-evidencias/
-```
-
-Os arquivos de evidência correspondem à execução realizada no ambiente utilizado para a entrega.
-
-Dessa forma, os resultados apresentados representam os testes efetivamente executados no projeto.
-
-## Considerações finais
-
-O projeto foi desenvolvido com foco na aplicação de testes automatizados sobre uma implementação de Truco Paulista.
-
-A suíte de testes contempla regras relacionadas ao baralho, cartas, manilhas, vazas, turnos, Truco, pontuação, mão de onze, mão de ferro e encerramento da partida.
-
-A implementação utiliza JavaScript e os recursos de testes disponibilizados pelo Node.js, permitindo que os cenários sejam executados diretamente pelo terminal sem necessidade de navegador ou interface gráfica.
+O professor exige um repositório por desafio e aceita no máximo cinco para avaliação. Este pacote permite revisar o projeto individualmente antes de escolher quais cinco serão enviados. Não há histórico de contribuição artificial: os compromissos devem registrar as contribuições reais dos integrantes.
