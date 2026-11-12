@@ -1,0 +1,40 @@
+✔ CT01 - baralho possui 40 cartas e nao contem 8, 9 e 10 (1.1288ms)
+✔ CT02 - hierarquia normal das cartas vai de 4 ate 3 (0.1777ms)
+✔ CT03 - manilha e o valor seguinte ao vira, com volta de 3 para 4 (0.1272ms)
+✔ CT04 - naipes das manilhas: ouros, espadas, copas e paus (0.1159ms)
+✔ CT05 - carta ou vaza invalida e rejeitada (0.5122ms)
+✔ CT06 - maior carta vence, empate adversario amarra, empate parceiro vence dupla (0.1944ms)
+✔ CT07 - duas vazas vencidas encerram a mao (0.1979ms)
+✔ CT08 - regras de desempate das vazas (0.1284ms)
+✔ CT09 - distribui tres cartas para cada jogador e define o vira (1.9195ms)
+✔ CT10 - rejeita distribuicao repetida e inicio durante mao aberta (0.2343ms)
+✔ CT11 - exige turno correto e carta disponivel sem alterar a mao (0.454ms)
+✔ CT12 - aceitar truco eleva o valor para tres e preserva o turno (0.245ms)
+✔ CT13 - recusar truco da um ponto a dupla solicitante (0.1307ms)
+✔ CT14 - escalada aceita segue 3, 6, 9 e 12; recusa paga valor anterior (0.2243ms)
+✔ CT15 - mao de onze exige decisao e vale tres quando aceita (0.3069ms)
+✔ CT16 - recusar mao de onze concede um ponto ao adversario (0.1691ms)
+✔ CT17 - partida completa termina ao atingir doze pontos (0.2555ms)
+✔ CT18 - snapshots e placar inicial nao permitem alterar estado interno (0.1238ms)
+✔ CT19 - mao de ferro oculta cartas e vira e nao permite truco (0.1702ms)
+✔ CT20 - mao encerrada pontua um e permite uma nova mao (0.2185ms)
+✔ CT21 - nao permite truco para a mesma dupla que pediu anteriormente (0.0984ms)
+✔ CT22 - pedido de truco somente ocorre no turno do jogador (0.1357ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 601.3509
+ℹ start of coverage report
+ℹ ----------------------------------------------------------
+ℹ file      | line % | branch % | funcs % | uncovered lines
+ℹ ----------------------------------------------------------
+ℹ src       |        |          |         | 
+ℹ  truco.js | 100.00 |    95.83 |  100.00 | 
+ℹ ----------------------------------------------------------
+ℹ all files | 100.00 |    95.83 |  100.00 | 
+ℹ ----------------------------------------------------------
+ℹ end of coverage report

@@ -1,0 +1,14 @@
+{
+  "name": "desafio_teste_truco_gabriel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Desafio de testes de software: Truco Paulista em JavaScript",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node scripts/run-tests.js",
+    "coverage": "node scripts/run-tests.js --coverage"
+  }
+}
